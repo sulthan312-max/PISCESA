@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="PISCESA - Keindahan Laut, Dalam Setiap Karya. Brand kreatif handmade yang mengolah sisik ikan menjadi produk kerajinan dengan nilai, estetika, dan karakter.">
+    <meta name="keywords" content="piscesa, handmade, kerajinan, sisik ikan, crafts, lifestyle, creative, artisan">
+    <meta name="author" content="PISCESA">
+    <meta name="theme-color" content="#12352f">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://piscesa.com/">
+    <meta property="og:title" content="PISCESA - Keindahan Laut, Dalam Setiap Karya">
+    <meta property="og:description" content="Aksesori handmade premium dari sisik ikan yang disulap menjadi karya elegan, unik, dan bernilai seni.">
+    <meta property="og:image" content="images/logo.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://piscesa.com/">
+    <meta property="twitter:title" content="PISCESA - From Scales to Creation">
+    <meta property="twitter:description" content="Distinctive handmade pieces crafted from fish scales.">
+    <meta property="twitter:image" content="images/logo.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    
+    <title>PISCESA | Keindahan Laut, Dalam Setiap Karya</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Language/i18n Dictionary -->
+    <script src="js/i18n.js"></script>
+    
+    <style>
+        /* Piscesa specific styles */
+        .hero-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .brand-story {
+            background: var(--primary-cream);
+            padding: 60px 0;
+        }
+        
+        .process-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .process-step {
+            text-align: center;
+            flex: 0 1 auto;
+        }
+        
+        .process-step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-beige);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0 auto 16px;
+            font-size: 1.5rem;
+        }
+        
+        .process-arrow {
+            font-size: 2rem;
+            color: var(--accent-teal);
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .process-arrow {
+                display: none;
+            }
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .category-card {
+            padding: 40px;
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        
+        .category-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .category-card p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================================
+         NAVIGATION BAR
+         ================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img class="logo-image" src="images/piscesa_logo.png" alt="PISCESA">
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Beranda</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">Tentang Kami</a></li>
+                <li><a href="produk.html" class="nav-link" data-i18n="nav_products">Koleksi</a></li>
+                <li><a href="order.html" class="nav-link" data-i18n="nav_order">Pesan</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Kontak</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div id="langSwitchContainer">
+                <span id="langID" class="active">ID</span>
+                <span id="langEN">EN</span>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================
+         HERO SECTION
+         ================================== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid"><div class="hero-content">
+                <h1 data-i18n="hero_title">PISCESA</h1>
+                <p data-i18n="hero_subtitle">Keindahan Laut, Dalam Setiap Karya</p>
+                <p data-i18n="hero_desc">Aksesori handmade premium dari sisik ikan yang disulap menjadi karya elegan, unik, dan bernilai seni.</p>
+                <div class="hero-buttons">
+                    <a href="produk.html" class="btn btn-primary" data-i18n="hero_view_products">Lihat Koleksi</a>
+                    <a href="order.html" class="btn btn-secondary" data-i18n="hero_order_now">Pesan Sekarang</a>
+                </div>
+            </div><div class="hero-image"><img src="images/piscesa_hero_collection.png" alt="Koleksi utama PISCESA dari sisik ikan"></div></div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FEATURED COLLECTION SECTION
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="featured_collection_title">Koleksi Pilihan</h2>
+                <p data-i18n="featured_collection_desc">Produk unggulan kami yang dirancang dengan cermat</p>
+            </div>
+            
+            <div class="products-grid" id="featuredProducts">
+                <div style="text-align: center; grid-column: 1/-1;">
+                    <p data-i18n="products_loading">Memuat koleksi...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         BRAND STORY SECTION
+         ================================== -->
+    <section class="section brand-story">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="brand_story_title">Dari Material Menjadi Cerita</h2>
+                <p data-i18n="brand_story_subtitle">Transformasi Sisik Ikan Menjadi Aksesori Bernilai Seni</p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                <p data-i18n="brand_story_desc" style="color: var(--text-gray); font-size: 1.1rem;">
+                    Piscesa memulai dengan sebuah pertanyaan sederhana: apa yang bisa kita ciptakan dari sisik ikan? 
+                    Dari sana lahir proses kreatif yang mengubah limbah menjadi kerajinan bermakna. Setiap produk adalah 
+                    hasil perjalanan—dari pemilihan material, proses pengolahan, hingga bentuk akhir yang siap menjadi 
+                    bagian dari kehidupan sehari-hari Anda.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         PROCESS SECTION
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="process_title">Proses Kreatif</h2>
+                <p data-i18n="process_subtitle">Dari Bahan Baku Hingga Karya Jadi</p>
+            </div>
+            
+            <div class="process-container">
+                <div class="process-step">
+                    <div class="process-step-number">1</div>
+                    <h4 data-i18n="process_step_1">Sisik Dipilih</h4>
+                </div>
+                
+                <div class="process-arrow">→</div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">2</div>
+                    <h4 data-i18n="process_step_2">Dibersihkan</h4>
+                </div>
+                
+                <div class="process-arrow">→</div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">3</div>
+                    <h4 data-i18n="process_step_3">Diolah</h4>
+                </div>
+                
+                <div class="process-arrow">→</div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">4</div>
+                    <h4 data-i18n="process_step_4">Dibentuk</h4>
+                </div>
+                
+                <div class="process-arrow">→</div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">5</div>
+                    <h4 data-i18n="process_step_5">Menjadi Karya</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         CATEGORY SECTION
+         ================================== -->
+    <section class="section" style="background: var(--primary-cream);">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="category_title">Jelajahi Koleksi</h2>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">✨</div>
+                    <h3 data-i18n="category_accessories">Aksesori</h3>
+                    <p>Bros, Bando, dan Aksesoris Lainnya</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">👜</div>
+                    <h3 data-i18n="category_fashion">Fashion</h3>
+                    <p>Tas, Topi, dan Perlengkapan Mode</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">🏠</div>
+                    <h3 data-i18n="category_lifestyle">Lifestyle</h3>
+                    <p>Aksesori Eksklusif dari Sisik Ikan</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">⭐</div>
+                    <h3 data-i18n="category_special">Edisi Spesial</h3>
+                    <p>Koleksi Terbatas dan Inovasi Terbaru</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         WHY PISCESA SECTION
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="why_piscesa_title">Mengapa Piscesa?</h2>
+                <p data-i18n="why_piscesa_subtitle">Nilai yang Kami Tawarkan</p>
+            </div>
+            
+            <div class="vm-grid">
+                <div class="vm-card">
+                    <div class="icon">🎨</div>
+                    <h3 data-i18n="why_handcrafted">Handmade Berkualitas</h3>
+                    <p data-i18n="why_handcrafted_desc">Setiap produk dibuat dengan tangan oleh pengrajin berpengalaman</p>
+                </div>
+                
+                <div class="vm-card">
+                    <div class="icon">💎</div>
+                    <h3 data-i18n="why_unique_material">Material Unik</h3>
+                    <p data-i18n="why_unique_material_desc">Sisik ikan sebagai bahan utama menciptakan tekstur dan karakter yang istimewa</p>
+                </div>
+                
+                <div class="vm-card">
+                    <div class="icon">✏️</div>
+                    <h3 data-i18n="why_creative_design">Desain Kreatif</h3>
+                    <p data-i18n="why_creative_design_desc">Inovasi desain yang menggabungkan estetika modern dengan keunikan tradisional</p>
+                </div>
+                
+                <div class="vm-card">
+                    <div class="icon">❤️</div>
+                    <h3 data-i18n="why_purposeful">Penuh Makna</h3>
+                    <p data-i18n="why_purposeful_desc">Setiap karya memiliki cerita dan tujuan untuk meningkatkan kualitas hidup Anda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         CTA SECTION
+         ================================== -->
+    <section class="section" style="background: var(--primary-dark); color: var(--white);">
+        <div class="container">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px; color: var(--white);" data-i18n="cta_main_title">
+                    Temukan karya yang paling cocok untukmu.
+                </h2>
+                <div class="hero-buttons" style="justify-content: center; margin-top: 30px;">
+                    <a href="produk.html" class="btn btn-light" data-i18n="cta_main_btn">Lihat Semua Koleksi</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FOOTER
+         ================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3 data-i18n="footer_about_title">PISCESA</h3>
+                    <p style="font-size: 0.9rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic;" data-i18n="footer_tagline">
+                        Keindahan Laut, Dalam Setiap Karya
+                    </p>
+                    <p data-i18n="footer_company_desc">
+                        Brand kreatif yang mengolah sisik ikan menjadi produk kerajinan dengan nilai guna, estetika, dan karakter.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer_menu_title">Menu Cepat</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="footer_home">Beranda</a></li>
+                        <li><a href="about.html" data-i18n="footer_about">Tentang Kami</a></li>
+                        <li><a href="produk.html" data-i18n="footer_products">Koleksi</a></li>
+                        <li><a href="order.html" data-i18n="footer_order">Pesan</a></li>
+                        <li><a href="contact.html" data-i18n="footer_contact_link">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 data-i18n="footer_contact_title">Kontak</h4>
+                    <p><i class="fas fa-instagram" style="margin-right: 8px;"></i><a href="#" style="color: inherit;">@piscesa</a></p>
+                    <p><i class="fas fa-whatsapp" style="margin-right: 8px;"></i><a href="https://wa.me/6287808228699" style="color: inherit;">WhatsApp</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 PISCESA. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/company-loader.js"></script>
+    <script src="js/script.js"></script>
+    
+    <!-- Language Switcher -->
+    <script>
+        document.getElementById('langID').addEventListener('click', () => {
+            setLanguage('id');
+            document.getElementById('langID').classList.add('active');
+            document.getElementById('langEN').classList.remove('active');
+        });
+        
+        document.getElementById('langEN').addEventListener('click', () => {
+            setLanguage('en');
+            document.getElementById('langID').classList.remove('active');
+            document.getElementById('langEN').classList.add('active');
+        });
+        
+        // Initialize language buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const langID = document.getElementById('langID');
+            const langEN = document.getElementById('langEN');
+            
+            if (currentLanguage === 'id') {
+                langID.classList.add('active');
+                langEN.classList.remove('active');
+            } else {
+                langID.classList.remove('active');
+                langEN.classList.add('active');
+            }
+        });
+    </script>
+
+    <!-- Load Featured Products -->
+    <script>
+        async function loadFeaturedProducts() {
+            const container = document.getElementById('featuredProducts');
+            
+            // Wait for Supabase client
+            let retries = 0;
+            while (!window.supabaseClient && retries < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                retries++;
+            }
+
+            if (!window.supabaseClient) {
+                console.error('Supabase client not initialized');
+                return;
+            }
+
+            try {
+                const { data: products, error } = await window.supabaseClient
+                    .from('products')
+                    .select('*')
+                    .eq('is_featured', true)
+                    .limit(6);
+
+                if (error) throw error;
+
+                container.innerHTML = '';
+
+                if (!products || products.length === 0) {
+                    products = [
+                        {name:"Bros Sisik Kakap Putih", description:"Aksesori handmade dengan detail sisik ikan dan sentuhan pearl elegan.", category:"Bros Premium", image_url:"images/piscesa_bros_putih.png"},
+                        {name:"Koleksi Emerald Laut", description:"Karya bernuansa hijau laut dengan karakter unik PISCESA.", category:"Aksesori Handmade", image_url:"images/piscesa_hero_collection.png"},
+                        {name:"Signature Collection", description:"Souvenir dan dekorasi bernilai seni dari sisik ikan Indonesia.", category:"Koleksi PISCESA", image_url:"images/piscesa_karya.png"}
+                    ];
+                }
+
+                products.forEach(product => {
+                    const isEnglish = currentLanguage === 'en';
+                    const name = isEnglish && product.name_en ? product.name_en : product.name;
+                    const desc = isEnglish && product.description_en ? product.description_en : product.description;
+                    const category = isEnglish && product.category_en ? product.category_en : product.category;
+                    
+                    const imageHTML = product.image_url && product.image_url.trim() 
+                        ? `<img src="${product.image_url}" alt="${name}" style="width: 100%; height: 100%; object-fit: cover;">`
+                        : `<div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-cream) 0%, var(--accent-pearl) 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem;">✨</div>`;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-image">${imageHTML}</div>
+                        <div class="product-info">
+                            <span class="product-category">${category || 'Produk'}</span>
+                            <h3>${name}</h3>
+                            <p>${desc || translate('product_default_desc')}</p>
+                            <a href="order.html" class="btn btn-primary">${translate('product_order_btn')}</a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                const msg = translate('products_error');
+                container.innerHTML = `<p style="text-align: center; grid-column: 1/-1; color: var(--text-gray);">${msg}</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadFeaturedProducts);
+    </script>
+</body>
+</html>

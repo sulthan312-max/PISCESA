@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Hubungi PISCESA - Kontak kami melalui WhatsApp, Instagram, atau Email untuk pertanyaan dan pesanan.">
+    <meta name="theme-color" content="#12352f">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kontak PISCESA">
+    <meta property="og:description" content="Hubungi kami melalui berbagai saluran komunikasi untuk kebutuhan Anda.">
+    
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    
+    <title>PISCESA | Kontak</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Language/i18n Dictionary -->
+    <script src="js/i18n.js"></script>
+    
+    <style>
+        .contact-header {
+            background: linear-gradient(135deg, var(--primary-cream) 0%, var(--accent-pearl) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .contact-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+            margin: 50px 0;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .contact-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .contact-card .icon {
+            font-size: 2rem;
+            color: var(--accent-teal);
+            margin-bottom: 12px;
+        }
+        
+        .contact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+        
+        .contact-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+        
+        .contact-card a {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card a:hover {
+            color: var(--accent-gold);
+            text-decoration: underline;
+        }
+        
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .contact-form h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(90, 138, 140, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 12px 24px;
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-submit:hover {
+            background: var(--accent-teal);
+            transform: translateY(-2px);
+        }
+        
+        .hero-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        @media (max-width: 968px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .contact-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================================
+         NAVIGATION BAR
+         ================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img class="logo-image" src="images/piscesa_logo.png" alt="PISCESA">
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Beranda</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">Tentang Kami</a></li>
+                <li><a href="produk.html" class="nav-link" data-i18n="nav_products">Koleksi</a></li>
+                <li><a href="order.html" class="nav-link" data-i18n="nav_order">Pesan</a></li>
+                <li><a href="contact.html" class="nav-link active" data-i18n="nav_contact">Kontak</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div id="langSwitchContainer">
+                <span id="langID" class="active">ID</span>
+                <span id="langEN">EN</span>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================
+         HEADER SECTION
+         ================================== -->
+    <section class="contact-header">
+        <div class="container">
+            <h1 data-i18n="contact_page_title">Hubungi Kami</h1>
+            <p data-i18n="contact_page_subtitle" style="font-size: 1.1rem; color: var(--text-gray);">
+                Kami Senang Mendengar Dari Anda
+            </p>
+        </div>
+    </section>
+
+    <!-- ===================================
+         CONTACT CONTENT
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-content">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <!-- WhatsApp -->
+                    <div class="contact-card">
+                        <div class="icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 data-i18n="contact_whatsapp_title">WhatsApp</h3>
+                        <p data-i18n="contact_whatsapp_desc">
+                            Hubungi kami langsung melalui WhatsApp untuk pertanyaan dan pesanan cepat.
+                        </p>
+                        <a href="https://wa.me/6287808228699" target="_blank">
+                            <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="contact_whatsapp_link">Buka WhatsApp</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Instagram -->
+                    <div class="contact-card">
+                        <div class="icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h3 data-i18n="contact_instagram_title">Instagram</h3>
+                        <p data-i18n="contact_instagram_desc">
+                            Follow akun Instagram kami untuk inspirasi, behind-the-scenes, dan update terbaru.
+                        </p>
+                        <a href="https://instagram.com/piscesa" target="_blank">
+                            <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="contact_instagram_link">@piscesa</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="contact-card">
+                        <div class="icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 data-i18n="contact_email_title">Email</h3>
+                        <p data-i18n="contact_email_desc">
+                            Kirim email kepada kami untuk pertanyaan yang lebih detail atau partnership.
+                        </p>
+                        <a href="mailto:hello@piscesa.com">
+                            <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>
+                            <span>hello@piscesa.com</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3 data-i18n="contact_form_title">Kirim Pesan</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" data-i18n="contact_form_name">Nama Anda</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" data-i18n="contact_form_email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" data-i18n="contact_form_subject">Subjek</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" data-i18n="contact_form_message">Pesan</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="form-submit" data-i18n="contact_form_submit">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FOOTER
+         ================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3 data-i18n="footer_about_title">PISCESA</h3>
+                    <p style="font-size: 0.9rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic;" data-i18n="footer_tagline">
+                        Dari Sisik Menjadi Karya
+                    </p>
+                    <p data-i18n="footer_company_desc">
+                        Brand kreatif yang mengolah sisik ikan menjadi produk kerajinan dengan nilai guna, estetika, dan karakter.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer_menu_title">Menu Cepat</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="footer_home">Beranda</a></li>
+                        <li><a href="about.html" data-i18n="footer_about">Tentang Kami</a></li>
+                        <li><a href="produk.html" data-i18n="footer_products">Koleksi</a></li>
+                        <li><a href="order.html" data-i18n="footer_order">Pesan</a></li>
+                        <li><a href="contact.html" data-i18n="footer_contact_link">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 data-i18n="footer_contact_title">Kontak</h4>
+                    <p><i class="fas fa-instagram" style="margin-right: 8px;"></i><a href="#" style="color: inherit;">@piscesa</a></p>
+                    <p><i class="fas fa-whatsapp" style="margin-right: 8px;"></i><a href="https://wa.me/6287808228699" style="color: inherit;">WhatsApp</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 PISCESA. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/company-loader.js"></script>
+    <script src="js/script.js"></script>
+    
+    <!-- Language Switcher -->
+    <script>
+        document.getElementById('langID').addEventListener('click', () => {
+            setLanguage('id');
+            document.getElementById('langID').classList.add('active');
+            document.getElementById('langEN').classList.remove('active');
+            applyTranslations();
+        });
+        
+        document.getElementById('langEN').addEventListener('click', () => {
+            setLanguage('en');
+            document.getElementById('langID').classList.remove('active');
+            document.getElementById('langEN').classList.add('active');
+            applyTranslations();
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const langID = document.getElementById('langID');
+            const langEN = document.getElementById('langEN');
+            
+            if (currentLanguage === 'id') {
+                langID.classList.add('active');
+                langEN.classList.remove('active');
+            } else {
+                langID.classList.remove('active');
+                langEN.classList.add('active');
+            }
+            
+            applyTranslations();
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = form.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = currentLanguage === 'id' ? 'Mengirim...' : 'Sending...';
+                
+                const formData = new FormData(form);
+                const response = await fetch('api/contact', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert(currentLanguage === 'id' ? 'Pesan terkirim!' : 'Message sent!');
+                    form.reset();
+                } else {
+                    alert(currentLanguage === 'id' ? 'Error mengirim pesan' : 'Error sending message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert(currentLanguage === 'id' ? 'Error mengirim pesan' : 'Error sending message');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+</html>

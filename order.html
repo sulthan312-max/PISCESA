@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Pesan Produk PISCESA - Isi formulir pesanan untuk membeli kerajinan sisik ikan berkualitas kami.">
+    <meta name="theme-color" content="#12352f">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pesan PISCESA">
+    <meta property="og:description" content="Pesan produk kerajinan unik dari PISCESA sekarang juga.">
+    
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    
+    <title>PISCESA | Pesan</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Language/i18n Dictionary -->
+    <script src="js/i18n.js"></script>
+    
+    <style>
+        .order-header {
+            background: linear-gradient(135deg, var(--primary-cream) 0%, var(--accent-pearl) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .order-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        
+        .order-form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+        }
+        
+        .form-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(90, 138, 140, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-row-full {
+            grid-column: 1/-1;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .form-submit:hover {
+            background: var(--accent-teal);
+            transform: translateY(-2px);
+        }
+        
+        .form-submit:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(90, 138, 140, 0.05) 0%, rgba(201, 169, 97, 0.05) 100%);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent-teal);
+        }
+        
+        .info-box p {
+            margin: 8px 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .hero-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .order-form-container {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================================
+         NAVIGATION BAR
+         ================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img class="logo-image" src="images/piscesa_logo.png" alt="PISCESA">
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Beranda</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">Tentang Kami</a></li>
+                <li><a href="produk.html" class="nav-link" data-i18n="nav_products">Koleksi</a></li>
+                <li><a href="order.html" class="nav-link active" data-i18n="nav_order">Pesan</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Kontak</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div id="langSwitchContainer">
+                <span id="langID" class="active">ID</span>
+                <span id="langEN">EN</span>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================
+         HEADER SECTION
+         ================================== -->
+    <section class="order-header">
+        <div class="container">
+            <h1 data-i18n="page_order_title">Pesan Produk Piscesa</h1>
+            <p data-i18n="order_header_subtitle" style="font-size: 1.1rem; color: var(--text-gray);">
+                Isi formulir di bawah untuk melakukan pemesanan
+            </p>
+        </div>
+    </section>
+
+    <!-- ===================================
+         ORDER FORM
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <div class="order-form-container">
+                <div class="info-box">
+                    <p style="font-weight: 600; margin-bottom: 12px;"><i class="fas fa-info-circle" style="margin-right: 8px;"></i><span data-i18n="order_info_title">Informasi Penting</span></p>
+                    <p data-i18n="order_info_text">
+                        Setelah Anda submit formulir ini, kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pesanan dan pembayaran.
+                    </p>
+                </div>
+                
+                <form id="orderForm">
+                    <!-- Section 1: Personal Information -->
+                    <div class="form-section">
+                        <h3 class="form-section-title" data-i18n="order_section_personal">Informasi Pribadi</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name" data-i18n="order_your_name">Nama Lengkap</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp" data-i18n="order_whatsapp">WhatsApp</label>
+                                <input type="text" id="whatsapp" name="whatsapp" placeholder="+62..." required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-row-full">
+                            <label for="email" data-i18n="order_email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                    </div>
+                    
+                    <!-- Section 2: Order Details -->
+                    <div class="form-section">
+                        <h3 class="form-section-title" data-i18n="order_section_product">Produk yang Dipesan</h3>
+                        
+                        <div class="form-group form-row-full">
+                            <label for="products" data-i18n="order_select_product">Pilih Produk</label>
+                            <select id="products" name="products" required>
+                                <option value="" data-i18n="order_choose_product">-- Pilih Produk --</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quantity" data-i18n="order_quantity">Jumlah</label>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="size" data-i18n="order_size">Ukuran</label>
+                                <input type="text" id="size" name="size" placeholder="contoh: M, L, Reguler">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group form-row-full">
+                            <label for="notes" data-i18n="order_notes">Catatan Khusus</label>
+                            <textarea id="notes" name="notes" data-i18n-placeholder="order_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 3: Shipping Address -->
+                    <div class="form-section">
+                        <h3 class="form-section-title" data-i18n="order_section_shipping">Alamat Pengiriman</h3>
+                        
+                        <div class="form-group form-row-full">
+                            <label for="address" data-i18n="order_address">Alamat Lengkap</label>
+                            <textarea id="address" name="address" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" data-i18n="order_city">Kota/Kabupaten</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="province" data-i18n="order_province">Provinsi</label>
+                                <input type="text" id="province" name="province" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postal_code" data-i18n="order_postal">Kode Pos</label>
+                                <input type="text" id="postal_code" name="postal_code" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country" data-i18n="order_country">Negara</label>
+                                <input type="text" id="country" name="country" value="Indonesia" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit -->
+                    <button type="submit" class="form-submit" data-i18n="order_submit">
+                        Pesan Sekarang
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FOOTER
+         ================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3 data-i18n="footer_about_title">PISCESA</h3>
+                    <p style="font-size: 0.9rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic;" data-i18n="footer_tagline">
+                        Dari Sisik Menjadi Karya
+                    </p>
+                    <p data-i18n="footer_company_desc">
+                        Brand kreatif yang mengolah sisik ikan menjadi produk kerajinan dengan nilai guna, estetika, dan karakter.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer_menu_title">Menu Cepat</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="footer_home">Beranda</a></li>
+                        <li><a href="about.html" data-i18n="footer_about">Tentang Kami</a></li>
+                        <li><a href="produk.html" data-i18n="footer_products">Koleksi</a></li>
+                        <li><a href="order.html" data-i18n="footer_order">Pesan</a></li>
+                        <li><a href="contact.html" data-i18n="footer_contact_link">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 data-i18n="footer_contact_title">Kontak</h4>
+                    <p><i class="fas fa-instagram" style="margin-right: 8px;"></i><a href="#" style="color: inherit;">@piscesa</a></p>
+                    <p><i class="fas fa-whatsapp" style="margin-right: 8px;"></i><a href="https://wa.me/6287808228699" style="color: inherit;">WhatsApp</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 PISCESA. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/company-loader.js"></script>
+    <script src="js/script.js"></script>
+    
+    <!-- Language Switcher -->
+    <script>
+        document.getElementById('langID').addEventListener('click', () => {
+            setLanguage('id');
+            document.getElementById('langID').classList.add('active');
+            document.getElementById('langEN').classList.remove('active');
+            applyTranslations();
+        });
+        
+        document.getElementById('langEN').addEventListener('click', () => {
+            setLanguage('en');
+            document.getElementById('langID').classList.remove('active');
+            document.getElementById('langEN').classList.add('active');
+            applyTranslations();
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const langID = document.getElementById('langID');
+            const langEN = document.getElementById('langEN');
+            
+            if (currentLanguage === 'id') {
+                langID.classList.add('active');
+                langEN.classList.remove('active');
+            } else {
+                langID.classList.remove('active');
+                langEN.classList.add('active');
+            }
+            
+            applyTranslations();
+            loadProductsForOrder();
+        });
+        
+        // Load products for dropdown
+        async function loadProductsForOrder() {
+            let retries = 0;
+            while (!window.supabaseClient && retries < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                retries++;
+            }
+
+            if (!window.supabaseClient) return;
+
+            try {
+                const { data: products } = await window.supabaseClient
+                    .from('products')
+                    .select('id, name, name_en');
+
+                const select = document.getElementById('products');
+                products?.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    const name = currentLanguage === 'en' && product.name_en ? product.name_en : product.name;
+                    option.textContent = name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+        
+        // Form submission
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = form.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = currentLanguage === 'id' ? 'Mengirim...' : 'Sending...';
+                
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    whatsapp: document.getElementById('whatsapp').value,
+                    email: document.getElementById('email').value,
+                    product_id: document.getElementById('products').value,
+                    quantity: document.getElementById('quantity').value,
+                    size: document.getElementById('size').value,
+                    notes: document.getElementById('notes').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    postal_code: document.getElementById('postal_code').value,
+                    country: document.getElementById('country').value,
+                };
+                
+                // Send to WhatsApp
+                const message = `
+*Pesanan Baru dari PISCESA*
+
+Nama: ${formData.name}
+WhatsApp: ${formData.whatsapp}
+Email: ${formData.email}
+Produk: ${document.getElementById('products').options[document.getElementById('products').selectedIndex].text}
+Jumlah: ${formData.quantity}
+Ukuran: ${formData.size || '-'}
+Catatan: ${formData.notes || '-'}
+
+*Alamat Pengiriman:*
+${formData.address}
+${formData.city}, ${formData.province} ${formData.postal_code}
+${formData.country}
+                `.trim();
+                
+                const waLink = `https://wa.me/6287808228699?text=${encodeURIComponent(message)}`;
+                window.open(waLink, '_blank');
+                
+                // Also save to backend if available
+                try {
+                    await fetch('api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                } catch (err) {
+                    console.log('Order saved locally');
+                }
+                
+                alert(currentLanguage === 'id' ? 
+                    'Pesanan Anda telah dikirim ke WhatsApp kami. Terima kasih!' : 
+                    'Your order has been sent to our WhatsApp. Thank you!');
+                form.reset();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(currentLanguage === 'id' ? 'Error mengirim pesanan' : 'Error sending order');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+</html>

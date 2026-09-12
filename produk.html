@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="PISCESA Koleksi - Jelajahi koleksi bros, aksesori, dan souvenir handmade berbahan sisik ikan.">
+    <meta name="keywords" content="koleksi, produk, kerajinan, sisik ikan, handmade, piscesa">
+    <meta name="theme-color" content="#12352f">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PISCESA Koleksi">
+    <meta property="og:description" content="Kerajinan unik dari sisik ikan dengan desain dan fungsi yang bermakna.">
+    
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    
+    <title>PISCESA | Koleksi</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Language/i18n Dictionary -->
+    <script src="js/i18n.js"></script>
+    
+    <style>
+        .products-header {
+            background: linear-gradient(135deg, var(--primary-cream) 0%, var(--accent-pearl) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        .products-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        
+        .filter-section {
+            margin: 40px 0;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-light);
+            background: var(--white);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--text-dark);
+            color: var(--white);
+            border-color: var(--text-dark);
+        }
+        
+        .hero-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================================
+         NAVIGATION BAR
+         ================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img class="logo-image" src="images/piscesa_logo.png" alt="PISCESA">
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Beranda</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">Tentang Kami</a></li>
+                <li><a href="produk.html" class="nav-link active" data-i18n="nav_products">Koleksi</a></li>
+                <li><a href="order.html" class="nav-link" data-i18n="nav_order">Pesan</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Kontak</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div id="langSwitchContainer">
+                <span id="langID" class="active">ID</span>
+                <span id="langEN">EN</span>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================
+         HEADER SECTION
+         ================================== -->
+    <section class="products-header">
+        <div class="container">
+            <h1 data-i18n="page_products_title">Koleksi Piscesa</h1>
+            <p data-i18n="page_products_subtitle" style="font-size: 1.1rem; color: var(--text-gray);">
+                Temukan Karya yang Cocok untuk Anda
+            </p>
+        </div>
+    </section>
+
+    <!-- ===================================
+         PRODUCTS SECTION
+         ================================== -->
+    <section class="section">
+        <div class="container">
+            <!-- Filters -->
+            <div class="filter-section">
+                <span style="font-weight: 600; color: var(--text-dark);">Kategori:</span>
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="accessories">Aksesori</button>
+                <button class="filter-btn" data-filter="fashion">Fashion</button>
+                <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
+                <button class="filter-btn" data-filter="special">Edisi Spesial</button>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <div style="text-align: center; grid-column: 1/-1;">
+                    <p data-i18n="products_loading">Memuat koleksi...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FOOTER
+         ================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3 data-i18n="footer_about_title">PISCESA</h3>
+                    <p style="font-size: 0.9rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic;" data-i18n="footer_tagline">
+                        Dari Sisik Menjadi Karya
+                    </p>
+                    <p data-i18n="footer_company_desc">
+                        Brand kreatif yang mengolah sisik ikan menjadi produk kerajinan dengan nilai guna, estetika, dan karakter.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer_menu_title">Menu Cepat</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="footer_home">Beranda</a></li>
+                        <li><a href="about.html" data-i18n="footer_about">Tentang Kami</a></li>
+                        <li><a href="produk.html" data-i18n="footer_products">Koleksi</a></li>
+                        <li><a href="order.html" data-i18n="footer_order">Pesan</a></li>
+                        <li><a href="contact.html" data-i18n="footer_contact_link">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 data-i18n="footer_contact_title">Kontak</h4>
+                    <p><i class="fas fa-instagram" style="margin-right: 8px;"></i><a href="#" style="color: inherit;">@piscesa</a></p>
+                    <p><i class="fas fa-whatsapp" style="margin-right: 8px;"></i><a href="https://wa.me/6287808228699" style="color: inherit;">WhatsApp</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 PISCESA. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/company-loader.js"></script>
+    <script src="js/script.js"></script>
+    
+    <!-- Language Switcher -->
+    <script>
+        document.getElementById('langID').addEventListener('click', () => {
+            setLanguage('id');
+            document.getElementById('langID').classList.add('active');
+            document.getElementById('langEN').classList.remove('active');
+            loadProducts();
+        });
+        
+        document.getElementById('langEN').addEventListener('click', () => {
+            setLanguage('en');
+            document.getElementById('langID').classList.remove('active');
+            document.getElementById('langEN').classList.add('active');
+            loadProducts();
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const langID = document.getElementById('langID');
+            const langEN = document.getElementById('langEN');
+            
+            if (currentLanguage === 'id') {
+                langID.classList.add('active');
+                langEN.classList.remove('active');
+            } else {
+                langID.classList.remove('active');
+                langEN.classList.add('active');
+            }
+        });
+    </script>
+
+    <!-- Load Products -->
+    <script>
+        let allProducts = [];
+        let currentFilter = 'all';
+
+        async function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            
+            // Wait for Supabase
+            let retries = 0;
+            while (!window.supabaseClient && retries < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                retries++;
+            }
+
+            if (!window.supabaseClient) {
+                console.error('Supabase not ready');
+                return;
+            }
+
+            try {
+                const { data: products, error } = await window.supabaseClient
+                    .from('products')
+                    .select('*');
+
+                if (error) throw error;
+
+                allProducts = products || [];
+                renderProducts(allProducts);
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                const msg = translate('products_error');
+                grid.innerHTML = `<p style="text-align: center; grid-column: 1/-1; color: var(--text-gray);">${msg}</p>`;
+            }
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            const isEnglish = currentLanguage === 'en';
+            
+            grid.innerHTML = '';
+
+            if (!products || products.length === 0) {
+                const msg = translate('products_no_available');
+                grid.innerHTML = `<p style="text-align: center; grid-column: 1/-1;">${msg}</p>`;
+                return;
+            }
+
+            products.forEach(product => {
+                const name = isEnglish && product.name_en ? product.name_en : product.name;
+                const desc = isEnglish && product.description_en ? product.description_en : product.description;
+                const category = isEnglish && product.category_en ? product.category_en : product.category;
+                
+                const imageHTML = product.image_url && product.image_url.trim()
+                    ? `<img src="${product.image_url}" alt="${name}" style="width: 100%; height: 100%; object-fit: cover;">`
+                    : `<div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-cream) 0%, var(--accent-pearl) 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem;">✨</div>`;
+                
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">${imageHTML}</div>
+                    <div class="product-info">
+                        <span class="product-category">${category || 'Produk'}</span>
+                        <h3>${name}</h3>
+                        <p style="margin-bottom: 16px;">${desc || translate('product_default_desc')}</p>
+                        <a href="order.html" class="btn btn-primary">${translate('product_order_btn')}</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    
+                    if (currentFilter === 'all') {
+                        renderProducts(allProducts);
+                    } else {
+                        const filtered = allProducts.filter(p => 
+                            (p.category || '').toLowerCase() === currentFilter.toLowerCase() ||
+                            (p.category_en || '').toLowerCase() === currentFilter.toLowerCase()
+                        );
+                        renderProducts(filtered);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
