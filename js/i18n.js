@@ -44,6 +44,12 @@ const i18n = {
         category_fashion: "Fashion",
         category_lifestyle: "Lifestyle",
         category_special: "Edisi Spesial",
+        category_accessories_desc: "Bros, Bando, dan Aksesori Lainnya",
+        category_fashion_desc: "Tas, Topi, dan Perlengkapan Mode",
+        category_lifestyle_desc: "Aksesori Eksklusif dari Sisik Ikan",
+        category_special_desc: "Koleksi Terbatas dan Inovasi Terbaru",
+        filter_category: "Kategori:",
+        filter_all: "Semua",
 
         // INDEX - WHY PISCESA
         why_piscesa_title: "Mengapa Piscesa?",
@@ -90,6 +96,9 @@ const i18n = {
         about_story_title: "Cerita Piscesa",
         about_story_subtitle: "Perjalanan dari Ide Hingga Kenyataan",
         about_story_text: "Piscesa lahir dari sebuah visi sederhana: memberikan nilai baru pada sisik ikan. Dalam perjalanannya, kami menemukan bahwa material sederhana bisa menjadi luar biasa ketika disentuh oleh kreativitas dan perhatian terhadap detail.\n\nSetiap produk Piscesa adalah hasil dialog antara tradisi pengolahan ikan dan inovasi desain modern. Kami percaya bahwa kerajinan terbaik lahir ketika maker memahami material, menghormati prosesnya, dan menghadirkan sesuatu yang bermakna.\n\nHari ini, Piscesa tidak hanya menjadi brand produk, tetapi sebuah gerakan kecil untuk menunjukkan bahwa limbah bisa menjadi karya, dan karya bisa menjadi bagian dari gaya hidup yang lebih baik.",
+        about_story_intro: "Berawal dari kecintaan terhadap keindahan laut Indonesia, Piscesa hadir untuk mengubah material alami menjadi karya seni yang memiliki nilai estetika.",
+        about_story_material: "Sisik ikan yang sebelumnya sering dianggap sederhana diolah kembali melalui kreativitas tangan pengrajin menjadi aksesori dan dekorasi yang unik.",
+        about_story_meaning: "Setiap karya Piscesa membawa cerita tentang laut, kepedulian lingkungan, dan keindahan yang dapat dikenang dalam setiap detailnya.",
 
         // ABOUT VALUES
         about_values_title: "Nilai-Nilai Kami",
@@ -197,10 +206,6 @@ const i18n = {
         collection_lifestyle_subtitle: "Produk Untuk Kehidupan Sehari-hari",
         collection_special_title: "Edisi Spesial",
         collection_special_subtitle: "Koleksi Terbatas dan Inovasi Terbaru",
-    },
-
-
-        // FIXED MISSING CONTENT KEYS
         about_value_1_title: "Kreatif",
         about_value_1_desc: "Menghadirkan desain unik melalui kreativitas dan inovasi.",
         about_value_2_title: "Ramah Lingkungan",
@@ -233,6 +238,7 @@ const i18n = {
         order_province: "Provinsi",
         order_country: "Negara",
         order_postal: "Kode Pos",
+    },
 
     en: {
         // NAVBAR
@@ -273,6 +279,12 @@ const i18n = {
         category_fashion: "Fashion",
         category_lifestyle: "Lifestyle",
         category_special: "Special Edition",
+        category_accessories_desc: "Brooches, Headbands, and More",
+        category_fashion_desc: "Bags, Hats, and Fashion Accessories",
+        category_lifestyle_desc: "Exclusive Fish Scale Accessories",
+        category_special_desc: "Limited Collections and Latest Innovations",
+        filter_category: "Category:",
+        filter_all: "All",
 
         // INDEX - WHY PISCESA
         why_piscesa_title: "Why Piscesa?",
@@ -319,6 +331,9 @@ const i18n = {
         about_story_title: "Our Story",
         about_story_subtitle: "From Concept to Reality",
         about_story_text: "Piscesa was born from a simple vision: to give fish scales new meaning and value. In this journey, we discovered that simple materials can become extraordinary when touched by creativity and attention to detail.\n\nEvery Piscesa piece is the result of dialogue between traditional fish processing and modern design innovation. We believe the best craftsmanship emerges when makers understand their material, respect the process, and create something truly meaningful.\n\nToday, Piscesa is more than just a product brand—it's a small movement showing that waste can become art, and art can become part of a better lifestyle.",
+        about_story_intro: "Born from a love for the beauty of Indonesia's oceans, Piscesa transforms natural materials into art with lasting aesthetic value.",
+        about_story_material: "Fish scales, once seen as simple remnants, are reimagined by artisans into distinctive accessories and decor.",
+        about_story_meaning: "Every Piscesa piece carries a story of the sea, environmental care, and beauty preserved in every detail.",
 
         // ABOUT VALUES
         about_values_title: "Our Values",
@@ -426,8 +441,6 @@ const i18n = {
         collection_lifestyle_subtitle: "Products for Everyday Living",
         collection_special_title: "Special Edition",
         collection_special_subtitle: "Limited Collections and Latest Innovations",
-    }
-        // FIXED MISSING CONTENT KEYS
         about_value_1_title: "Creative",
         about_value_1_desc: "Creating unique designs through creativity and innovation.",
         about_value_2_title: "Eco Friendly",
@@ -460,6 +473,7 @@ const i18n = {
         order_province: "Province",
         order_country: "Country",
         order_postal: "Postal Code",
+    }
 
 };
 
@@ -467,11 +481,13 @@ const i18n = {
 // LANGUAGE MANAGEMENT
 // =====================================================
 
-let currentLanguage = localStorage.getItem('piscesa-language') || 'id';
+let currentLanguage = localStorage.getItem('lang') || localStorage.getItem('piscesa-language') || 'id';
 
 function setLanguage(lang) {
     if (i18n[lang]) {
         currentLanguage = lang;
+        window.currentLang = lang;
+        localStorage.setItem('lang', lang);
         localStorage.setItem('piscesa-language', lang);
         applyTranslations();
         updatePageLang();

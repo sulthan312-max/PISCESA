@@ -8,7 +8,7 @@
 // =====================================================
 
 // Global language variable
-let currentLang = 'id';
+let currentLang = localStorage.getItem('lang') || localStorage.getItem('piscesa-language') || 'id';
 
 // Initialize language system once on page load
 function initLanguageSystem() {
@@ -20,9 +20,10 @@ function initLanguageSystem() {
     }
 
     // Priority 1: Check localStorage
-    const savedLang = localStorage.getItem('lang');
+    const savedLang = localStorage.getItem('lang') || localStorage.getItem('piscesa-language');
     if (savedLang && (savedLang === 'id' || savedLang === 'en')) {
         currentLang = savedLang;
+        currentLanguage = currentLang;
         console.log(`🌍 Language loaded from localStorage: ${currentLang}`);
     } else {
         // Priority 2: Auto-detect from browser language
@@ -35,6 +36,9 @@ function initLanguageSystem() {
         console.log(`🌍 Language auto-detected: ${currentLang}`);
         localStorage.setItem('lang', currentLang);
     }
+
+    currentLanguage = currentLang;
+    localStorage.setItem('piscesa-language', currentLang);
 
     // Apply language to page
     applyLanguage();
@@ -105,11 +109,17 @@ function setLanguage(lang) {
     }
 
     currentLang = lang;
+    currentLanguage = lang;
     localStorage.setItem('lang', currentLang);
+    localStorage.setItem('piscesa-language', currentLang);
     console.log(`🔄 Language switched to: ${currentLang}`);
 
     // Apply language to page
     applyLanguage();
+    if (typeof applyTranslations === 'function') {
+        applyTranslations();
+        updatePageLang();
+    }
     
     // Update language switch UI
     updateLanguageSwitchUI();
@@ -147,9 +157,9 @@ function createLanguageSwitchUI() {
 
     // Create language switch HTML (removed inline styles, using CSS classes)
     const langSwitchHTML = `
-        <li id="langSwitchContainer">
+        <li id="langSwitchContainer" class="nav-language">
             <span id="langID" onclick="setLanguage('id')">ID</span>
-            <span style="color: #999;">|</span>
+            <span class="lang-divider">|</span>
             <span id="langEN" onclick="setLanguage('en')">EN</span>
         </li>
     `;

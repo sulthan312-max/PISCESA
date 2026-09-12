@@ -11,8 +11,8 @@
     <meta property="og:title" content="PISCESA Koleksi">
     <meta property="og:description" content="Kerajinan unik dari sisik ikan dengan desain dan fungsi yang bermakna.">
     
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/piscesa_logo.png">
+    <link rel="apple-touch-icon" href="images/piscesa_logo.png">
     
     <title>PISCESA | Koleksi</title>
     
@@ -90,13 +90,10 @@
                 <li><a href="produk.html" class="nav-link active" data-i18n="nav_products">Koleksi</a></li>
                 <li><a href="order.html" class="nav-link" data-i18n="nav_order">Pesan</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Kontak</a></li>
+                <li id="langSwitchContainer" class="nav-language">
+                    <span id="langID" class="active">ID</span><span class="lang-divider">|</span><span id="langEN">EN</span>
+                </li>
             </ul>
-            
-            <!-- Language Switcher -->
-            <div id="langSwitchContainer">
-                <span id="langID" class="active">ID</span>
-                <span id="langEN">EN</span>
-            </div>
             
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -125,12 +122,12 @@
         <div class="container">
             <!-- Filters -->
             <div class="filter-section">
-                <span style="font-weight: 600; color: var(--text-dark);">Kategori:</span>
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="accessories">Aksesori</button>
-                <button class="filter-btn" data-filter="fashion">Fashion</button>
-                <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
-                <button class="filter-btn" data-filter="special">Edisi Spesial</button>
+                <span style="font-weight: 600; color: var(--text-dark);" data-i18n="filter_category">Kategori:</span>
+                <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Semua</button>
+                <button class="filter-btn" data-filter="accessories" data-i18n="category_accessories">Aksesori</button>
+                <button class="filter-btn" data-filter="fashion" data-i18n="category_fashion">Fashion</button>
+                <button class="filter-btn" data-filter="lifestyle" data-i18n="category_lifestyle">Lifestyle</button>
+                <button class="filter-btn" data-filter="special" data-i18n="category_special">Edisi Spesial</button>
             </div>
             
             <!-- Products Grid -->
